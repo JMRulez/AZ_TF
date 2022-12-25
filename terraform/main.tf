@@ -1,9 +1,9 @@
 terraform {
   backend "azurerm" {
-    resource_group_name  = "jmtfrg"
+    resource_group_name = "jmtfrg"
     storage_account_name = "jmtfststac"
-    container_name       = "jmtfststaccontainer"
-    key                  = "jmtfststaccontainer.tfstate"
+    container_name = "jmtfststaccontainer"
+    key = "jmtfststaccontainer.tfstate"
   }
 }
  

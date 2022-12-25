@@ -1,27 +1,27 @@
 terraform {
   backend "azurerm" {
-    resource_group_name = "jmtfrg"
+    resource_group_name  = "jmtfrg"
     storage_account_name = "jmtfststac"
-    container_name = "jmtfststaccontainer"
-    key = "jmtfststaccontainer.tfstate"
+    container_name       = "jmtfststaccontainer"
+    key                  = "jmtfststaccontainer.tfstate"
   }
 }
- 
+
 provider "azurerm" {
   # The "feature" block is required for AzureRM provider 2.x.
   # If you're using version 1.x, the "features" block is not allowed.
   version = "~>2.0"
   features {}
 }
- 
+
 data "azurerm_client_config" "current" {}
- 
+
 #Create Resource Group
 resource "azurerm_resource_group" "jm-tftest" {
   name     = "jm-tftest"
   location = "eastus2"
 }
- 
+
 #Create Virtual Network
 resource "azurerm_virtual_network" "vnet" {
   name                = "jm-tftest-vnet"
@@ -29,7 +29,7 @@ resource "azurerm_virtual_network" "vnet" {
   location            = "eastus2"
   resource_group_name = azurerm_resource_group.jm-tftest.name
 }
- 
+
 # Create Subnet
 resource "azurerm_subnet" "subnet" {
   name                 = "subnet"

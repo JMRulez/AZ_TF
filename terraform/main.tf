@@ -57,7 +57,7 @@ resource "azurerm_network_interface" "myvm1nic" {
     name                          = "ipconfig1"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.publicip.id
+    public_ip_address_id          = azurerm_public_ip.myvm1publicip.id
   }
 }
 
@@ -66,7 +66,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   name                  = "myvm1"
   location              = "eastus2"
   resource_group_name   = azurerm_resource_group.jm-tftest.name
-  network_interface_ids = [azurerm_network_interface.nic.id]
+  network_interface_ids = [azurerm_network_interface.myvm1nic.id]
   size                  = "Standard_B1s"
   admin_username        = "adminuser"
   admin_password        = "Password123!"

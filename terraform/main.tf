@@ -39,47 +39,47 @@ resource "azurerm_subnet" "subnet" {
 }
 
 # Define new oublic IP address
-resource   "azurerm_public_ip"   "myvm1publicip"   { 
-   name   =   "myvm1publicip" 
-   location   =   "eastus2" 
-   resource_group_name   =   azurerm_resource_group.jm-tftest.name 
-   allocation_method   =   "Dynamic" 
-   sku   =   "Basic" 
-} 
+resource "azurerm_public_ip" "myvm1publicip" {
+  name                = "myvm1publicip"
+  location            = "eastus2"
+  resource_group_name = azurerm_resource_group.jm-tftest.name
+  allocation_method   = "Dynamic"
+  sku                 = "Basic"
+}
 
 # Define Network Interface
-resource   "azurerm_network_interface"   "myvm1nic"   { 
-   name   =   "myvm1nic" 
-   location   =   "eastus2" 
-   resource_group_name   =   azurerm_resource_group.jm-tftest.name
+resource "azurerm_network_interface" "myvm1nic" {
+  name                = "myvm1nic"
+  location            = "eastus2"
+  resource_group_name = azurerm_resource_group.jm-tftest.name
 
-   ip_configuration   { 
-     name   =   "ipconfig1" 
-     subnet_id   =   azurerm_subnet.subnet.id 
-     private_ip_address_allocation   =   "Dynamic" 
-     public_ip_address_id   =   azurerm_public_ip.myvm 1 publicip.id 
-   } 
-} 
+  ip_configuration {
+    name                          = "ipconfig1"
+    subnet_id                     = azurerm_subnet.subnet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.publicip.id
+  }
+}
 
 # Define VM
-resource   "azurerm_windows_virtual_machine"   "vm"   { 
-   name                    =   "myvm1"   
-   location                =   "eastus2" 
-   resource_group_name     =   azurerm_resource_group.jm-tftest.name 
-   network_interface_ids   =   [ azurerm_network_interface.myvm 1 nic.id ] 
-   size                    =   "Standard_B1s" 
-   admin_username          =   "adminuser" 
-   admin_password          =   "Password123!" 
+resource "azurerm_windows_virtual_machine" "vm" {
+  name                  = "myvm1"
+  location              = "eastus2"
+  resource_group_name   = azurerm_resource_group.jm-tftest.name
+  network_interface_ids = [azurerm_network_interface.nic.id]
+  size                  = "Standard_B1s"
+  admin_username        = "adminuser"
+  admin_password        = "Password123!"
 
-   source_image_reference   { 
-     publisher   =   "MicrosoftWindowsServer" 
-     offer       =   "WindowsServer" 
-     sku         =   "2019-Datacenter" 
-     version     =   "latest" 
-   } 
+  source_image_reference {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2019-Datacenter"
+    version   = "latest"
+  }
 
-   os_disk   { 
-     caching             =   "ReadWrite" 
-     storage_account_type   =   "Standard_LRS" 
-   } 
-} 
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+}

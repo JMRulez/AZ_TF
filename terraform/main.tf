@@ -67,7 +67,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   location              = "eastus2"
   resource_group_name   = azurerm_resource_group.jm-tftest.name
   network_interface_ids = [azurerm_network_interface.myvm1nic.id]
-  size                  = "Standard_B1s"
+  size                  = "Standard_D2as_v4"
   admin_username        = "adminuser"
   admin_password        = "Password123!"
 

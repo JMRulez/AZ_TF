@@ -2,7 +2,11 @@ name: 'Terraform'
  
 on:
   workflow_dispatch:
-
+    inputs:
+      TFAction:
+        description: "Terraform Action- Apply or Destroy"     
+        required: true
+        default: "apply"
  
 jobs:
   terraform:
@@ -52,11 +56,19 @@ jobs:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'plan'
         tf_actions_working_dir: "./terraform"
- 
+   
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/main'
+      if: ${{ inputs.TFAction == 'apply'}}  
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'apply'
+        tf_actions_working_dir: "./terraform"
+      
+    - name: Terraform Destroy
+      if: ${{ inputs.TFAction == 'destroy' }} 
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 0.14.8
+        tf_actions_subcommand: 'destroy'
         tf_actions_working_dir: "./terraform"
